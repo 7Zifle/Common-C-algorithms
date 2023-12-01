@@ -2,6 +2,7 @@
 #include "CUnit/CUnitCI.h"
 
 #include "quicksort.h"
+#include "linked_list.h"
 #include "array_util.h"
 
 static void test_quicksort() {
