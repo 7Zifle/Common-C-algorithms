@@ -3,4 +3,3 @@
 int arrcmp(int *first, int *second, int n);
 void print_array(int *array, int n);
 #endif // !___ALGOS_ARRAY_UTIL_H__
-
