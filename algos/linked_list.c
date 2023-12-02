@@ -2,44 +2,43 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct node *node_create(int value)
+struct ll_node *ll_node_create(int value)
 {
-	struct node *n = (struct node *)malloc(sizeof(struct node));
+	struct ll_node *n = (struct ll_node *)malloc(sizeof(struct ll_node));
 	n->value = value;
 	n->next = NULL;
 	n->prev = NULL;
 	return n;
 }
 
-struct node *node_get(struct node *node, int index)
+struct ll_node *ll_node_get(struct ll_node *node, int index)
 {
 	for (int count = 0; node && count < index; node = node->next, count++) {
 	}
 	return node;
 }
 
-void node_insert_after(struct node *p, int value)
+void ll_node_insert_after(struct ll_node *p, int value)
 {
-	struct node *c = node_create(value);
+	struct ll_node *c = ll_node_create(value);
 	c->prev = p;
 	if (p->next) {
-		printf("called");
 		p->next->prev = c;
 		c->next = p->next;
 	}
 	p->next = c;
 }
 
-void node_push(struct node *root, int value)
+void ll_node_push(struct ll_node *root, int value)
 {
-	struct node *head = root;
+	struct ll_node *head = root;
 	while (head->next) {
 		head = head->next;
 	}
-	node_insert_after(head, value);
+	ll_node_insert_after(head, value);
 }
 
-void node_print(struct node *n)
+void ll_node_print(struct ll_node *n)
 {
 	printf("list: [");
 	while (n) {
@@ -49,7 +48,7 @@ void node_print(struct node *n)
 	printf("]");
 }
 
-void node_remove(struct node *node, int index)
+void ll_node_remove(struct ll_node *node, int index)
 {
 	for (int count = 0; node && count < index; node = node->next, count++)
 		;
@@ -68,10 +67,10 @@ void node_remove(struct node *node, int index)
 	free(node);
 }
 
-void node_destroy(struct node *n)
+void ll_node_destroy(struct ll_node *n)
 {
 	if (n->next != NULL) {
-		node_destroy(n->next);
+		ll_node_destroy(n->next);
 	}
 
 	free(n);
