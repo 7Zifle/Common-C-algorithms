@@ -1,9 +1,11 @@
 #include "CUnit/CUnit.h"
 #include "CUnit/CUnitCI.h"
 
+#include "binary_tree.h"
 #include "quicksort.h"
 #include "linked_list.h"
 #include "array_util.h"
+#include "vector.h"
 
 static void test_quicksort()
 {
@@ -29,5 +31,51 @@ static void test_linked_list()
 	ll_node_destroy(root);
 }
 
+static void test_vector()
+{
+	struct vector *v = create_vector(1);
+	vector_push(v, 1);
+	vector_push(v, 1);
+	vector_push(v, 1);
+	vector_push(v, 2);
+	vector_push(v, 2);
+	vector_push(v, 3);
+	CU_ASSERT_EQUAL(v->data[v->lenth - 1], 3);
+	CU_ASSERT_EQUAL(v->capacity, 8);
+	vector_destroy(v);
+}
+
+static void test_binary_search_tree()
+{
+	struct bt_node *root = create_bt_node(1);
+	bt_insert(root, 2);
+	bt_insert(root, 3);
+	bt_insert(root, 0);
+	bt_insert(root, 7);
+	bt_insert(root, 8);
+	bt_insert(root, 12);
+
+	int correct_in[] = { 0, 1, 2, 3, 7, 8, 12 };
+	struct vector *vinorder_result = create_vector(7);
+	bt_inorder_to_array(root, vinorder_result);
+	CU_ASSERT_EQUAL(arrcmp(vinorder_result->data, correct_in, 7), 0);
+	vector_destroy(vinorder_result);
+
+	int correct_pre[] = { 1, 0, 2, 3, 7, 8, 12 };
+	struct vector *vpreorder_result = create_vector(7);
+	bt_preorder_to_array(root, vpreorder_result);
+	CU_ASSERT_EQUAL(arrcmp(vpreorder_result->data, correct_pre, 7), 0);
+	vector_destroy(vpreorder_result);
+
+	int correct_post[] = { 0, 12, 8, 7, 3, 2, 1 };
+	struct vector *vpostorder_result = create_vector(7);
+	bt_postorder_to_array(root, vpostorder_result);
+	CU_ASSERT_EQUAL(arrcmp(vpostorder_result->data, correct_post, 7), 0);
+	vector_destroy(vpostorder_result);
+
+	bt_destroy(root);
+}
+
 CUNIT_CI_RUN("algos", CUNIT_CI_TEST(test_quicksort),
-	     CUNIT_CI_TEST(test_linked_list));
+	     CUNIT_CI_TEST(test_linked_list), CUNIT_CI_TEST(test_vector),
+	     CUNIT_CI_TEST(test_binary_search_tree));
