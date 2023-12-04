@@ -2,6 +2,7 @@
 #include "CUnit/CUnitCI.h"
 
 #include "binary_tree.h"
+#include "queue.h"
 #include "quicksort.h"
 #include "linked_list.h"
 #include "array_util.h"
@@ -76,6 +77,24 @@ static void test_binary_search_tree()
 	bt_destroy(root);
 }
 
+static void test_queue()
+{
+	struct queue *queue = queue_create();
+	queue_push(queue, 12);
+	queue_push(queue, 1);
+	queue_push(queue, 19);
+
+	CU_ASSERT_EQUAL(queue_pop(queue), 12);
+	CU_ASSERT_EQUAL(queue_pop(queue), 1);
+	CU_ASSERT_EQUAL(queue_pop(queue), 19);
+
+	queue_push(queue, 17);
+	CU_ASSERT_EQUAL(queue_pop(queue), 17);
+
+
+	queue_destroy(queue);
+}
+
 CUNIT_CI_RUN("algos", CUNIT_CI_TEST(test_quicksort),
 	     CUNIT_CI_TEST(test_linked_list), CUNIT_CI_TEST(test_vector),
-	     CUNIT_CI_TEST(test_binary_search_tree));
+	     CUNIT_CI_TEST(test_queue), CUNIT_CI_TEST(test_binary_search_tree));
