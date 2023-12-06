@@ -6,6 +6,7 @@
 #include "quicksort.h"
 #include "linked_list.h"
 #include "array_util.h"
+#include "stack.h"
 #include "vector.h"
 
 static void test_quicksort()
@@ -91,10 +92,26 @@ static void test_queue()
 	queue_push(queue, 17);
 	CU_ASSERT_EQUAL(queue_pop(queue), 17);
 
-
 	queue_destroy(queue);
+}
+
+static void test_stack()
+{
+	struct stack *stack = stack_create();
+	stack_push(stack, 9);
+	stack_push(stack, 12);
+	stack_push(stack, 15);
+	stack_push(stack, 3);
+
+	CU_ASSERT_EQUAL(stack_pop(stack), 3);
+	CU_ASSERT_EQUAL(stack_pop(stack), 15);
+	CU_ASSERT_EQUAL(stack_pop(stack), 12);
+	CU_ASSERT_EQUAL(stack_pop(stack), 9);
+
+	stack_destroy(stack);
 }
 
 CUNIT_CI_RUN("algos", CUNIT_CI_TEST(test_quicksort),
 	     CUNIT_CI_TEST(test_linked_list), CUNIT_CI_TEST(test_vector),
-	     CUNIT_CI_TEST(test_queue), CUNIT_CI_TEST(test_binary_search_tree));
+	     CUNIT_CI_TEST(test_stack), CUNIT_CI_TEST(test_queue),
+	     CUNIT_CI_TEST(test_binary_search_tree));

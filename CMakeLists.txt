@@ -10,5 +10,6 @@ add_executable(algos_app
                 algos/quicksort.c
                 algos/binary_tree.c
                 algos/queue.c
+                algos/stack.c
                 algos/linked_list.c)
 target_link_libraries(algos_app PRIVATE cunit)
