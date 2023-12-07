@@ -2,12 +2,14 @@
 #include "CUnit/CUnitCI.h"
 
 #include "binary_tree.h"
+#include "binary_search.h"
 #include "queue.h"
 #include "quicksort.h"
 #include "linked_list.h"
 #include "array_util.h"
 #include "stack.h"
 #include "vector.h"
+#include "selection_sort.h"
 
 static void test_quicksort()
 {
@@ -111,7 +113,25 @@ static void test_stack()
 	stack_destroy(stack);
 }
 
+static void test_binary_search()
+{
+	int array[] = { 0, 12, 14, 18, 22, 28, 41, 43 };
+	CU_ASSERT_TRUE(binary_search(array, 8, 12));
+	CU_ASSERT_FALSE(binary_search(array, 8, 9));
+}
+
+static void test_selection_sort()
+{
+	int unsorted_array[] = { 9, 12, 3, 5, 1, 2, 7 };
+	int sorted_array[] = { 1, 2, 3, 5, 7, 9, 12 };
+
+	selection_sort(unsorted_array, 7);
+	CU_ASSERT_TRUE(arrcmp(unsorted_array, sorted_array, 7))
+}
+
 CUNIT_CI_RUN("algos", CUNIT_CI_TEST(test_quicksort),
 	     CUNIT_CI_TEST(test_linked_list), CUNIT_CI_TEST(test_vector),
 	     CUNIT_CI_TEST(test_stack), CUNIT_CI_TEST(test_queue),
+	     CUNIT_CI_TEST(test_binary_search), CUNIT_CI_TEST(test_queue),
+	     CUNIT_CI_TEST(test_selection_sort),
 	     CUNIT_CI_TEST(test_binary_search_tree));
